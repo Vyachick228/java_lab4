@@ -3,33 +3,78 @@ package com.example;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Головний клас програми з консольним меню
+ */
 public class Main {
     public static void main(String[] args) {
 
         ArrayList<Phone> phones = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
 
-        phones.add(new Phone("Apple", "iPhone 13", 999));
-        phones.add(new Phone("Samsung", "S22", 850));
-        phones.add(new Phone("Xiaomi", "Mi 11", 600));
+        while (true) {
+            System.out.println("\n=== МЕНЮ ===");
+            System.out.println("1 - Додати телефон");
+            System.out.println("2 - Показати всі телефони");
+            System.out.println("0 - Вийти");
+            System.out.print("Оберіть: ");
 
-        for (int i = 0; i < 2; i++) {
-            System.out.println("Enter brand:");
-            String brand = scanner.nextLine();
+            int choice;
 
-            System.out.println("Enter model:");
-            String model = scanner.nextLine();
+            // Обробка нечислового вводу
+            try {
+                choice = Integer.parseInt(scanner.nextLine());
+            } catch (Exception e) {
+                System.out.println("Некоректне введення! Введіть число.");
+                continue;
+            }
 
-            System.out.println("Enter price:");
-            double price = scanner.nextDouble();
-            scanner.nextLine(); // очистка
+            if (choice == 1) {
+                try {
+                    System.out.print("Введіть бренд: ");
+                    String brand = scanner.nextLine();
 
-            phones.add(new Phone(brand, model, price));
+                    System.out.print("Введіть модель: ");
+                    String model = scanner.nextLine();
+
+                    System.out.print("Введіть ціну: ");
+                    double price = Double.parseDouble(scanner.nextLine());
+
+                    System.out.print("Введіть пам'ять (GB): ");
+                    int storage = Integer.parseInt(scanner.nextLine());
+
+                    Phone phone = new Phone(brand, model, price, storage);
+                    phones.add(phone);
+
+                    System.out.println("Телефон додано!");
+
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Помилка: " + e.getMessage());
+                } catch (Exception e) {
+                    System.out.println("Невірний формат даних!");
+                }
+            }
+
+            else if (choice == 2) {
+                if (phones.isEmpty()) {
+                    System.out.println("Список порожній.");
+                } else {
+                    for (Phone p : phones) {
+                        System.out.println(p);
+                    }
+                }
+            }
+
+            else if (choice == 0) {
+                System.out.println("Завершення роботи...");
+                break;
+            }
+
+            else {
+                System.out.println("Невідома команда!");
+            }
         }
 
-        // вывод
-        for (Phone p : phones) {
-            System.out.println(p);
-        }
+        scanner.close();
     }
 }
