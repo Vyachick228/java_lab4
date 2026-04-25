@@ -2,3 +2,10 @@ target/
 *.class
 .idea/
 .vscode/
+
+/shelf/
+/workspace.xml
+/httpRequests/
+/queries/
+/dataSources/
+/dataSources.local.xml
