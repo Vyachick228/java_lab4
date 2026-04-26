@@ -4,20 +4,50 @@ package com.example;
  * Клас Phone описує мобільний телефон.
  */
 public class Phone {
+    private static int count = 0;
+
     private String brand;
     private String model;
     private double price;
     private int storage;
+    private PhoneType type;
+    private Manufacturer manufacturer;
 
     /**
      * Конструктор з параметрами.
      * Використовує сеттери для перевірки коректності даних.
      */
-    public Phone(String brand, String model, double price, int storage) {
+    public Phone(String brand, String model, double price, int storage, PhoneType type, Manufacturer manufacturer) {
         setBrand(brand);
         setModel(model);
         setPrice(price);
         setStorage(storage);
+
+        if (type == null) {
+            throw new IllegalArgumentException("Type cannot be null");
+        }
+        if (manufacturer == null) {
+            throw new IllegalArgumentException("Manufacturer cannot be null");
+        }
+
+        this.type = type;
+        this.manufacturer = manufacturer;
+
+        count++;
+    }
+
+    /**
+     * Копіюючий конструктор
+     */
+    public Phone(Phone other) {
+        this(other.brand, other.model, other.price, other.storage, other.type, other.manufacturer);
+    }
+
+    /**
+     * Повертає кількість створених об'єктів
+     */
+    public static int getCount() {
+        return count;
     }
 
     /**
@@ -46,6 +76,20 @@ public class Phone {
      */
     public int getStorage() {
         return storage;
+    }
+
+    /**
+     * Повертає тип телефону
+     */
+    public PhoneType getType() {
+        return type;
+    }
+
+    /**
+     * Повертає виробника телефону
+     */
+    public Manufacturer getManufacturer() {
+        return manufacturer;
     }
 
     /**
@@ -89,11 +133,31 @@ public class Phone {
     }
 
     /**
+     * Встановлює тип телефону
+     */
+    public void setType(PhoneType type) {
+        if (type == null) {
+            throw new IllegalArgumentException("Type cannot be null");
+        }
+        this.type = type;
+    }
+
+    /**
+     * Встановлює виробника телефону
+     */
+    public void setManufacturer(Manufacturer manufacturer) {
+        if (manufacturer == null) {
+            throw new IllegalArgumentException("Manufacturer cannot be null");
+        }
+        this.manufacturer = manufacturer;
+    }
+
+    /**
      * Повертає рядкове представлення об'єкта
      */
     @Override
     public String toString() {
-        return brand + " " + model + " | " + price + "$ | " + storage + "GB";
+        return brand + " " + model + " | " + price + "$ | " + storage + "GB | " + type + " | " + manufacturer;
     }
 
     /**
@@ -109,6 +173,8 @@ public class Phone {
         return brand.equals(other.brand) &&
                 model.equals(other.model) &&
                 price == other.price &&
-                storage == other.storage;
+                storage == other.storage &&
+                type == other.type &&
+                manufacturer.equals(other.manufacturer);
     }
 }

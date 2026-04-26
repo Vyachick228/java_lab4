@@ -16,6 +16,7 @@ public class Main {
             System.out.println("\n=== МЕНЮ ===");
             System.out.println("1 - Додати телефон");
             System.out.println("2 - Показати всі телефони");
+            System.out.println("3 - Показати кількість телефонів");
             System.out.println("0 - Вийти");
             System.out.print("Оберіть: ");
 
@@ -43,7 +44,33 @@ public class Main {
                     System.out.print("Введіть пам'ять (GB): ");
                     int storage = Integer.parseInt(scanner.nextLine());
 
-                    Phone phone = new Phone(brand, model, price, storage);
+                    System.out.println("Оберіть тип телефону:");
+                    System.out.println("1 - SMARTPHONE");
+                    System.out.println("2 - BUTTON");
+                    System.out.println("3 - FOLDABLE");
+
+                    int typeChoice = Integer.parseInt(scanner.nextLine());
+                    PhoneType type;
+
+                    if (typeChoice == 1) {
+                        type = PhoneType.SMARTPHONE;
+                    } else if (typeChoice == 2) {
+                        type = PhoneType.BUTTON;
+                    } else if (typeChoice == 3) {
+                        type = PhoneType.FOLDABLE;
+                    } else {
+                        throw new IllegalArgumentException("Невірний тип телефону");
+                    }
+
+                    System.out.print("Введіть виробника: ");
+                    String name = scanner.nextLine();
+
+                    System.out.print("Введіть країну: ");
+                    String country = scanner.nextLine();
+
+                    Manufacturer manufacturer = new Manufacturer(name, country);
+
+                    Phone phone = new Phone(brand, model, price, storage, type, manufacturer);
                     phones.add(phone);
 
                     System.out.println("Телефон додано!");
@@ -63,6 +90,10 @@ public class Main {
                         System.out.println(p);
                     }
                 }
+            }
+
+            else if (choice == 3) {
+                System.out.println("Кількість створених телефонів: " + Phone.getCount());
             }
 
             else if (choice == 0) {
