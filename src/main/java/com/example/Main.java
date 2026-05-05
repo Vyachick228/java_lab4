@@ -13,67 +13,76 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("\n=== МЕНЮ ===");
+            System.out.println("\n МЕНЮ ");
             System.out.println("1 - Додати телефон");
             System.out.println("2 - Показати всі телефони");
-            System.out.println("3 - Показати кількість телефонів");
             System.out.println("0 - Вийти");
             System.out.print("Оберіть: ");
 
             int choice;
 
-            // Обробка нечислового вводу
             try {
                 choice = Integer.parseInt(scanner.nextLine());
             } catch (Exception e) {
-                System.out.println("Некоректне введення! Введіть число.");
+                System.out.println("Некоректне введення!");
                 continue;
             }
 
             if (choice == 1) {
                 try {
-                    System.out.print("Введіть бренд: ");
-                    String brand = scanner.nextLine();
-
-                    System.out.print("Введіть модель: ");
-                    String model = scanner.nextLine();
-
-                    System.out.print("Введіть ціну: ");
-                    double price = Double.parseDouble(scanner.nextLine());
-
-                    System.out.print("Введіть пам'ять (GB): ");
-                    int storage = Integer.parseInt(scanner.nextLine());
-
-                    System.out.println("Оберіть тип телефону:");
-                    System.out.println("1 - SMARTPHONE");
-                    System.out.println("2 - BUTTON");
-                    System.out.println("3 - FOLDABLE");
+                    System.out.println("Оберіть тип:");
+                    System.out.println("1 - SmartPhone");
+                    System.out.println("2 - KeypadPhone");
 
                     int typeChoice = Integer.parseInt(scanner.nextLine());
-                    PhoneType type;
+
+                    System.out.print("Бренд: ");
+                    String brand = scanner.nextLine();
+
+                    System.out.print("Модель: ");
+                    String model = scanner.nextLine();
+
+                    System.out.print("Ціна: ");
+                    double price = Double.parseDouble(scanner.nextLine());
+
+                    System.out.print("Пам'ять: ");
+                    int storage = Integer.parseInt(scanner.nextLine());
+
+                    Phone phone;
 
                     if (typeChoice == 1) {
-                        type = PhoneType.SMARTPHONE;
-                    } else if (typeChoice == 2) {
-                        type = PhoneType.BUTTON;
-                    } else if (typeChoice == 3) {
-                        type = PhoneType.FOLDABLE;
-                    } else {
-                        throw new IllegalArgumentException("Невірний тип телефону");
+                        System.out.print("OS: ");
+                        String os = scanner.nextLine();
+
+                        phone = new SmartPhone(
+                                brand,
+                                model,
+                                price,
+                                storage,
+                                PhoneType.SMARTPHONE,
+                                os
+                        );
+                    }
+                    else if (typeChoice == 2) {
+                        System.out.print("Кнопки: ");
+                        int buttons = Integer.parseInt(scanner.nextLine());
+
+                        phone = new KeypadPhone(
+                                brand,
+                                model,
+                                price,
+                                storage,
+                                PhoneType.BUTTON,
+                                buttons
+                        );
+                    }
+                    else {
+                        System.out.println("Невірний вибір!");
+                        continue;
                     }
 
-                    System.out.print("Введіть виробника: ");
-                    String name = scanner.nextLine();
-
-                    System.out.print("Введіть країну: ");
-                    String country = scanner.nextLine();
-
-                    Manufacturer manufacturer = new Manufacturer(name, country);
-
-                    Phone phone = new Phone(brand, model, price, storage, type, manufacturer);
                     phones.add(phone);
-
-                    System.out.println("Телефон додано!");
+                    System.out.println("Додано!");
 
                 } catch (IllegalArgumentException e) {
                     System.out.println("Помилка: " + e.getMessage());
@@ -87,13 +96,10 @@ public class Main {
                     System.out.println("Список порожній.");
                 } else {
                     for (Phone p : phones) {
+                        System.out.println("Тип: " + p.getClass().getSimpleName());
                         System.out.println(p);
                     }
                 }
-            }
-
-            else if (choice == 3) {
-                System.out.println("Кількість створених телефонів: " + Phone.getCount());
             }
 
             else if (choice == 0) {
