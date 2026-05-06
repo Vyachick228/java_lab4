@@ -1,0 +1,19 @@
+package com.example;
+
+public class BusinessPhone extends Phone {
+
+    private boolean hasSecurity;
+
+    public BusinessPhone(String brand, String model, double price, int storage, PhoneType type, boolean hasSecurity) {
+        super(brand, model, price, storage, type);
+
+        this.hasSecurity = hasSecurity;
+    }
+
+    @Override
+    public String toString() {
+        return "BusinessPhone: " + getBrand() + " " + getModel() +
+                " | " + getPrice() + "$ | " + getStorage() + "GB | " + getType() +
+                " | Security: " + (hasSecurity ? "Yes" : "No");
+    }
+}
