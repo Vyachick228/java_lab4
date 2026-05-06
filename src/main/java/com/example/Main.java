@@ -33,6 +33,9 @@ public class Main {
                     System.out.println("Оберіть тип:");
                     System.out.println("1 - SmartPhone");
                     System.out.println("2 - KeypadPhone");
+                    System.out.println("3 - GamingPhone");
+                    System.out.println("4 - CameraPhone");
+                    System.out.println("5 - BusinessPhone");
 
                     int typeChoice = Integer.parseInt(scanner.nextLine());
 
@@ -74,6 +77,45 @@ public class Main {
                                 storage,
                                 PhoneType.BUTTON,
                                 buttons
+                        );
+                    }
+                    else if (typeChoice == 3) {
+                        System.out.print("FPS: ");
+                        int fps = Integer.parseInt(scanner.nextLine());
+
+                        phone = new GamingPhone(
+                                brand,
+                                model,
+                                price,
+                                storage,
+                                PhoneType.SMARTPHONE,
+                                fps
+                        );
+                    }
+                    else if (typeChoice == 4) {
+                        System.out.print("Мегапікселі: ");
+                        int mp = Integer.parseInt(scanner.nextLine());
+
+                        phone = new CameraPhone(
+                                brand,
+                                model,
+                                price,
+                                storage,
+                                PhoneType.SMARTPHONE,
+                                mp
+                        );
+                    }
+                    else if (typeChoice == 5) {
+                        System.out.print("Є захист? (true/false): ");
+                        boolean hasSecurity = Boolean.parseBoolean(scanner.nextLine());
+
+                        phone = new BusinessPhone(
+                                brand,
+                                model,
+                                price,
+                                storage,
+                                PhoneType.SMARTPHONE,
+                                hasSecurity
                         );
                     }
                     else {
