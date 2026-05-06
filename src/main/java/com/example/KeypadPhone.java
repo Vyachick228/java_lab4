@@ -7,6 +7,7 @@ public class KeypadPhone extends Phone {
     public KeypadPhone(String brand, String model, double price, int storage, PhoneType type, int buttons) {
         super(brand, model, price, storage, type);
 
+        this.classType = "KeypadPhone";
         if (buttons <= 0) {
             throw new IllegalArgumentException("Buttons must be > 0");
         }

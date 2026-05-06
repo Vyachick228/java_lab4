@@ -7,6 +7,7 @@ public class CameraPhone extends Phone {
     public CameraPhone(String brand, String model, double price, int storage, PhoneType type, int megapixels) {
         super(brand, model, price, storage, type);
 
+        this.classType = "CameraPhone";
         if (megapixels <= 0) {
             throw new IllegalArgumentException("Megapixels must be > 0");
         }

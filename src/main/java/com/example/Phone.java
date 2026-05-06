@@ -9,6 +9,7 @@ public class Phone {
     protected double price;
     protected int storage;
     protected PhoneType type;
+    protected String classType;
 
     /**
      * Конструктор з параметрами.
@@ -68,6 +69,11 @@ public class Phone {
      */
     public PhoneType getType() {
         return type;
+    }
+
+    // ДОДАНО: геттер для JSON
+    public String getClassType() {
+        return classType;
     }
 
     /**
