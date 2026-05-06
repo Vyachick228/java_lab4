@@ -11,6 +11,8 @@ public class Phone {
     protected PhoneType type;
     protected String classType;
 
+    public Phone() {}
+
     /**
      * Конструктор з параметрами.
      * Використовує сеттери для перевірки коректності даних.

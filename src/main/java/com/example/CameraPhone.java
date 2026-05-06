@@ -4,6 +4,11 @@ public class CameraPhone extends Phone {
 
     private int megapixels;
 
+    public CameraPhone() {
+        super("", "", 1, 1, PhoneType.SMARTPHONE);
+        this.classType = "CameraPhone";
+    }
+
     public CameraPhone(String brand, String model, double price, int storage, PhoneType type, int megapixels) {
         super(brand, model, price, storage, type);
 
