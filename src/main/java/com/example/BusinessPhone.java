@@ -4,10 +4,7 @@ public class BusinessPhone extends Phone {
 
     private boolean hasSecurity;
 
-    public BusinessPhone() {
-        super("", "", 1, 1, PhoneType.SMARTPHONE);
-        this.classType = "BusinessPhone";
-    }
+    public BusinessPhone() {}
 
     public BusinessPhone(String brand, String model, double price, int storage, PhoneType type, boolean hasSecurity) {
         super(brand, model, price, storage, type);

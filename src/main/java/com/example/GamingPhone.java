@@ -4,10 +4,7 @@ public class GamingPhone extends Phone {
 
     private int fps;
 
-    public GamingPhone() {
-        super("", "", 1, 1, PhoneType.SMARTPHONE);
-        this.classType = "GamingPhone";
-    }
+    public GamingPhone() {}
 
     public GamingPhone(String brand, String model, double price, int storage, PhoneType type, int fps) {
         super(brand, model, price, storage, type);

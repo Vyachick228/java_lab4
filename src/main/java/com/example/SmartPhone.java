@@ -3,10 +3,7 @@ package com.example;
 public class SmartPhone extends Phone {
     private String os;
 
-    public SmartPhone() {
-        super("", "", 1, 1, PhoneType.SMARTPHONE);
-        this.classType = "SmartPhone";
-    }
+    public SmartPhone() {}
 
     public SmartPhone(String brand, String model, double price, int storage, PhoneType type, String os) {
         super(brand, model, price, storage, type);

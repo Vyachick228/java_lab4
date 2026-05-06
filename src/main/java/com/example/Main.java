@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        ArrayList<Phone> phones = new ArrayList<>();
+        ArrayList<Phone> phones = FileManager.loadFromJson("input.json");
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -58,12 +58,8 @@ public class Main {
                         String os = scanner.nextLine();
 
                         phone = new SmartPhone(
-                                brand,
-                                model,
-                                price,
-                                storage,
-                                PhoneType.SMARTPHONE,
-                                os
+                                brand, model, price, storage,
+                                PhoneType.SMARTPHONE, os
                         );
                     }
                     else if (typeChoice == 2) {
@@ -71,12 +67,8 @@ public class Main {
                         int buttons = Integer.parseInt(scanner.nextLine());
 
                         phone = new KeypadPhone(
-                                brand,
-                                model,
-                                price,
-                                storage,
-                                PhoneType.BUTTON,
-                                buttons
+                                brand, model, price, storage,
+                                PhoneType.BUTTON, buttons
                         );
                     }
                     else if (typeChoice == 3) {
@@ -84,12 +76,8 @@ public class Main {
                         int fps = Integer.parseInt(scanner.nextLine());
 
                         phone = new GamingPhone(
-                                brand,
-                                model,
-                                price,
-                                storage,
-                                PhoneType.SMARTPHONE,
-                                fps
+                                brand, model, price, storage,
+                                PhoneType.SMARTPHONE, fps
                         );
                     }
                     else if (typeChoice == 4) {
@@ -97,12 +85,8 @@ public class Main {
                         int mp = Integer.parseInt(scanner.nextLine());
 
                         phone = new CameraPhone(
-                                brand,
-                                model,
-                                price,
-                                storage,
-                                PhoneType.SMARTPHONE,
-                                mp
+                                brand, model, price, storage,
+                                PhoneType.SMARTPHONE, mp
                         );
                     }
                     else if (typeChoice == 5) {
@@ -110,12 +94,8 @@ public class Main {
                         boolean hasSecurity = Boolean.parseBoolean(scanner.nextLine());
 
                         phone = new BusinessPhone(
-                                brand,
-                                model,
-                                price,
-                                storage,
-                                PhoneType.SMARTPHONE,
-                                hasSecurity
+                                brand, model, price, storage,
+                                PhoneType.SMARTPHONE, hasSecurity
                         );
                     }
                     else {
@@ -145,6 +125,9 @@ public class Main {
             }
 
             else if (choice == 0) {
+                FileManager.saveToJson(phones, "input.json");
+
+                System.out.println("Дані збережено!");
                 System.out.println("Завершення роботи...");
                 break;
             }

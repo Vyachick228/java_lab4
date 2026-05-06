@@ -1,0 +1,11 @@
+[
+  {
+    "buttons": 45,
+    "brand": "Smsa",
+    "model": "s2242",
+    "price": 222.0,
+    "storage": 124,
+    "type": "BUTTON",
+    "classType": "KeypadPhone"
+  }
+]
