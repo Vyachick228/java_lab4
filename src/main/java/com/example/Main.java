@@ -1,6 +1,5 @@
 package com.example;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -8,64 +7,13 @@ import java.util.Scanner;
  */
 public class Main {
 
-     // Метод пошуку телефонів за брендом
-
-    public static void searchByBrand(ArrayList<Phone> phones, String brand) {
-
-        boolean found = false;
-
-        for (Phone p : phones) {
-            if (p.getBrand().equalsIgnoreCase(brand)) {
-                System.out.println(p);
-                found = true;
-            }
-        }
-
-        if (!found) {
-            System.out.println("Телефони не знайдені.");
-        }
-    }
-
-     // Метод пошуку телефонів за типом
-
-    public static void searchByType(ArrayList<Phone> phones, String type) {
-
-        boolean found = false;
-
-        for (Phone p : phones) {
-            if (p.getClass().getSimpleName().equalsIgnoreCase(type)) {
-                System.out.println(p);
-                found = true;
-            }
-        }
-
-        if (!found) {
-            System.out.println("Телефони не знайдені.");
-        }
-    }
-    
-    // Метод пошуку телефонів за максимальною ціною
-
-    public static void searchByMaxPrice(ArrayList<Phone> phones, double maxPrice) {
-
-        boolean found = false;
-
-        for (Phone p : phones) {
-            if (p.getPrice() <= maxPrice) {
-                System.out.println(p);
-                found = true;
-            }
-        }
-
-        if (!found) {
-            System.out.println("Телефони не знайдені.");
-        }
-    }
-
     public static void main(String[] args) {
 
-        // Завантаження даних з JSON файлу
-        ArrayList<Phone> phones = FileManager.loadFromJson("input.json");
+        // Створення магазину
+        Store store = new Store();
+
+        // Завантаження даних з JSON
+        FileManager.loadFromJson(store, "input.json");
 
         Scanner scanner = new Scanner(System.in);
 
@@ -82,15 +30,16 @@ public class Main {
 
             int choice;
 
-            // Перевірка коректності введення
+            // Перевірка введення
             try {
                 choice = Integer.parseInt(scanner.nextLine());
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 System.out.println("Некоректне введення!");
                 continue;
             }
 
-            // Додавання нового телефону
+            // Додавання телефону
             if (choice == 1) {
 
                 try {
@@ -118,6 +67,9 @@ public class Main {
                     System.out.print("Пам'ять: ");
                     int storage = Integer.parseInt(scanner.nextLine());
 
+                    System.out.print("Кількість: ");
+                    int quantity = Integer.parseInt(scanner.nextLine());
+
                     Phone phone;
 
                     // Створення SmartPhone
@@ -127,8 +79,12 @@ public class Main {
                         String os = scanner.nextLine();
 
                         phone = new SmartPhone(
-                                brand, model, price, storage,
-                                PhoneType.SMARTPHONE, os
+                                brand,
+                                model,
+                                price,
+                                storage,
+                                PhoneType.SMARTPHONE,
+                                os
                         );
                     }
 
@@ -139,8 +95,12 @@ public class Main {
                         int buttons = Integer.parseInt(scanner.nextLine());
 
                         phone = new KeypadPhone(
-                                brand, model, price, storage,
-                                PhoneType.BUTTON, buttons
+                                brand,
+                                model,
+                                price,
+                                storage,
+                                PhoneType.BUTTON,
+                                buttons
                         );
                     }
 
@@ -151,8 +111,12 @@ public class Main {
                         int fps = Integer.parseInt(scanner.nextLine());
 
                         phone = new GamingPhone(
-                                brand, model, price, storage,
-                                PhoneType.SMARTPHONE, fps
+                                brand,
+                                model,
+                                price,
+                                storage,
+                                PhoneType.SMARTPHONE,
+                                fps
                         );
                     }
 
@@ -160,11 +124,15 @@ public class Main {
                     else if (typeChoice == 4) {
 
                         System.out.print("Мегапікселі: ");
-                        int mp = Integer.parseInt(scanner.nextLine());
+                        int megapixels = Integer.parseInt(scanner.nextLine());
 
                         phone = new CameraPhone(
-                                brand, model, price, storage,
-                                PhoneType.SMARTPHONE, mp
+                                brand,
+                                model,
+                                price,
+                                storage,
+                                PhoneType.SMARTPHONE,
+                                megapixels
                         );
                     }
 
@@ -175,28 +143,31 @@ public class Main {
                         boolean hasSecurity = Boolean.parseBoolean(scanner.nextLine());
 
                         phone = new BusinessPhone(
-                                brand, model, price, storage,
-                                PhoneType.SMARTPHONE, hasSecurity
+                                brand,
+                                model,
+                                price,
+                                storage,
+                                PhoneType.SMARTPHONE,
+                                hasSecurity
                         );
                     }
 
-                    // Обробка неправильного вибору
+                    // Невірний вибір
                     else {
                         System.out.println("Невірний вибір!");
                         continue;
                     }
 
-                    // Додавання телефону в колекцію
-                    phones.add(phone);
+                    // Додавання телефону в магазин
+                    store.addNewPhone(phone, quantity);
 
-                    System.out.println("Додано!");
+                    System.out.println("Телефон додано!");
 
-                } catch (IllegalArgumentException e) {
-
+                }
+                catch (IllegalArgumentException e) {
                     System.out.println("Помилка: " + e.getMessage());
-
-                } catch (Exception e) {
-
+                }
+                catch (Exception e) {
                     System.out.println("Невірний формат даних!");
                 }
             }
@@ -204,18 +175,7 @@ public class Main {
             // Виведення всіх телефонів
             else if (choice == 2) {
 
-                if (phones.isEmpty()) {
-
-                    System.out.println("Список порожній.");
-
-                } else {
-
-                    for (Phone p : phones) {
-
-                        System.out.println("Тип: " + p.getClass().getSimpleName());
-                        System.out.println(p);
-                    }
-                }
+                store.showAllPhones();
             }
 
             // Меню пошуку
@@ -235,7 +195,7 @@ public class Main {
                     System.out.print("Введіть бренд: ");
                     String brand = scanner.nextLine();
 
-                    searchByBrand(phones, brand);
+                    store.searchByBrand(brand);
                 }
 
                 // Пошук за типом
@@ -244,7 +204,7 @@ public class Main {
                     System.out.print("Введіть тип телефону: ");
                     String type = scanner.nextLine();
 
-                    searchByType(phones, type);
+                    store.searchByType(type);
                 }
 
                 // Пошук за ціною
@@ -253,22 +213,22 @@ public class Main {
                     System.out.print("Введіть максимальну ціну: ");
                     double maxPrice = Double.parseDouble(scanner.nextLine());
 
-                    searchByMaxPrice(phones, maxPrice);
+                    store.searchByMaxPrice(maxPrice);
                 }
             }
 
-            // Завершення роботи програми
+            // Завершення роботи
             else if (choice == 0) {
 
-                // Збереження даних у JSON файл
-                FileManager.saveToJson(phones, "input.json");
+                // Збереження в JSON
+                FileManager.saveToJson(store, "input.json");
 
                 System.out.println("Дані збережено!");
                 System.out.println("Завершення роботи...");
                 break;
             }
 
-            // Обробка невідомої команди
+            // Невідома команда
             else {
 
                 System.out.println("Невідома команда!");
