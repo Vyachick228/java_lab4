@@ -8,7 +8,8 @@ import java.util.Scanner;
  */
 public class Main {
 
-    // Пошук за брендом
+     // Метод пошуку телефонів за брендом
+
     public static void searchByBrand(ArrayList<Phone> phones, String brand) {
 
         boolean found = false;
@@ -25,7 +26,8 @@ public class Main {
         }
     }
 
-    // Пошук за типом
+     // Метод пошуку телефонів за типом
+
     public static void searchByType(ArrayList<Phone> phones, String type) {
 
         boolean found = false;
@@ -41,8 +43,9 @@ public class Main {
             System.out.println("Телефони не знайдені.");
         }
     }
+    
+    // Метод пошуку телефонів за максимальною ціною
 
-    // Пошук за максимальною ціною
     public static void searchByMaxPrice(ArrayList<Phone> phones, double maxPrice) {
 
         boolean found = false;
@@ -61,10 +64,15 @@ public class Main {
 
     public static void main(String[] args) {
 
+        // Завантаження даних з JSON файлу
         ArrayList<Phone> phones = FileManager.loadFromJson("input.json");
+
         Scanner scanner = new Scanner(System.in);
 
+        // Головний цикл програми
         while (true) {
+
+            // Головне меню
             System.out.println("\n МЕНЮ ");
             System.out.println("1 - Додати телефон");
             System.out.println("2 - Показати всі телефони");
@@ -74,6 +82,7 @@ public class Main {
 
             int choice;
 
+            // Перевірка коректності введення
             try {
                 choice = Integer.parseInt(scanner.nextLine());
             } catch (Exception e) {
@@ -81,8 +90,12 @@ public class Main {
                 continue;
             }
 
+            // Додавання нового телефону
             if (choice == 1) {
+
                 try {
+
+                    // Меню вибору типу телефону
                     System.out.println("Оберіть тип:");
                     System.out.println("1 - SmartPhone");
                     System.out.println("2 - KeypadPhone");
@@ -92,6 +105,7 @@ public class Main {
 
                     int typeChoice = Integer.parseInt(scanner.nextLine());
 
+                    // Введення спільних параметрів
                     System.out.print("Бренд: ");
                     String brand = scanner.nextLine();
 
@@ -106,7 +120,9 @@ public class Main {
 
                     Phone phone;
 
+                    // Створення SmartPhone
                     if (typeChoice == 1) {
+
                         System.out.print("OS: ");
                         String os = scanner.nextLine();
 
@@ -115,7 +131,10 @@ public class Main {
                                 PhoneType.SMARTPHONE, os
                         );
                     }
+
+                    // Створення KeypadPhone
                     else if (typeChoice == 2) {
+
                         System.out.print("Кнопки: ");
                         int buttons = Integer.parseInt(scanner.nextLine());
 
@@ -124,7 +143,10 @@ public class Main {
                                 PhoneType.BUTTON, buttons
                         );
                     }
+
+                    // Створення GamingPhone
                     else if (typeChoice == 3) {
+
                         System.out.print("FPS: ");
                         int fps = Integer.parseInt(scanner.nextLine());
 
@@ -133,7 +155,10 @@ public class Main {
                                 PhoneType.SMARTPHONE, fps
                         );
                     }
+
+                    // Створення CameraPhone
                     else if (typeChoice == 4) {
+
                         System.out.print("Мегапікселі: ");
                         int mp = Integer.parseInt(scanner.nextLine());
 
@@ -142,7 +167,10 @@ public class Main {
                                 PhoneType.SMARTPHONE, mp
                         );
                     }
+
+                    // Створення BusinessPhone
                     else if (typeChoice == 5) {
+
                         System.out.print("Є захист? (true/false): ");
                         boolean hasSecurity = Boolean.parseBoolean(scanner.nextLine());
 
@@ -151,32 +179,46 @@ public class Main {
                                 PhoneType.SMARTPHONE, hasSecurity
                         );
                     }
+
+                    // Обробка неправильного вибору
                     else {
                         System.out.println("Невірний вибір!");
                         continue;
                     }
 
+                    // Додавання телефону в колекцію
                     phones.add(phone);
+
                     System.out.println("Додано!");
 
                 } catch (IllegalArgumentException e) {
+
                     System.out.println("Помилка: " + e.getMessage());
+
                 } catch (Exception e) {
+
                     System.out.println("Невірний формат даних!");
                 }
             }
 
+            // Виведення всіх телефонів
             else if (choice == 2) {
+
                 if (phones.isEmpty()) {
+
                     System.out.println("Список порожній.");
+
                 } else {
+
                     for (Phone p : phones) {
+
                         System.out.println("Тип: " + p.getClass().getSimpleName());
                         System.out.println(p);
                     }
                 }
             }
 
+            // Меню пошуку
             else if (choice == 3) {
 
                 System.out.println("\nПОШУК");
@@ -187,33 +229,38 @@ public class Main {
 
                 int searchChoice = Integer.parseInt(scanner.nextLine());
 
+                // Пошук за брендом
                 if (searchChoice == 1) {
 
                     System.out.print("Введіть бренд: ");
                     String brand = scanner.nextLine();
 
                     searchByBrand(phones, brand);
-
                 }
+
+                // Пошук за типом
                 else if (searchChoice == 2) {
 
                     System.out.print("Введіть тип телефону: ");
                     String type = scanner.nextLine();
 
                     searchByType(phones, type);
-
                 }
+
+                // Пошук за ціною
                 else if (searchChoice == 3) {
 
                     System.out.print("Введіть максимальну ціну: ");
                     double maxPrice = Double.parseDouble(scanner.nextLine());
 
                     searchByMaxPrice(phones, maxPrice);
-
                 }
             }
 
+            // Завершення роботи програми
             else if (choice == 0) {
+
+                // Збереження даних у JSON файл
                 FileManager.saveToJson(phones, "input.json");
 
                 System.out.println("Дані збережено!");
@@ -221,7 +268,9 @@ public class Main {
                 break;
             }
 
+            // Обробка невідомої команди
             else {
+
                 System.out.println("Невідома команда!");
             }
         }
