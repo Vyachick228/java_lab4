@@ -16,6 +16,7 @@ public class Main {
             System.out.println("\n МЕНЮ ");
             System.out.println("1 - Додати телефон");
             System.out.println("2 - Показати всі телефони");
+            System.out.println("3 - Пошук телефону");
             System.out.println("0 - Вийти");
             System.out.print("Оберіть: ");
 
@@ -122,6 +123,18 @@ public class Main {
                         System.out.println(p);
                     }
                 }
+            }
+
+            else if (choice == 3) {
+
+                System.out.println("\nПОШУК");
+                System.out.println("1 - Пошук за брендом");
+                System.out.println("2 - Пошук за типом");
+                System.out.println("3 - Пошук за максимальною ціною");
+                System.out.println("0 - Назад");
+
+                int searchChoice = Integer.parseInt(scanner.nextLine());
+
             }
 
             else if (choice == 0) {
