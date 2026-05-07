@@ -74,4 +74,16 @@ public class FileManager {
 
         return phones;
     }
+    public static void loadFromJson(Store store, String fileName) {
+
+        ArrayList<Phone> phones = loadFromJson(fileName);
+
+        for (Phone phone : phones) {
+            store.addNewPhone(phone, 1);
+        }
+    }
+    public static void saveToJson(Store store, String fileName) {
+
+        saveToJson(store.getPhones(), fileName);
+    }
 }
