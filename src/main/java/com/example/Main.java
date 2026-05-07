@@ -7,6 +7,58 @@ import java.util.Scanner;
  * Головний клас програми з консольним меню
  */
 public class Main {
+
+    // Пошук за брендом
+    public static void searchByBrand(ArrayList<Phone> phones, String brand) {
+
+        boolean found = false;
+
+        for (Phone p : phones) {
+            if (p.getBrand().equalsIgnoreCase(brand)) {
+                System.out.println(p);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Телефони не знайдені.");
+        }
+    }
+
+    // Пошук за типом
+    public static void searchByType(ArrayList<Phone> phones, String type) {
+
+        boolean found = false;
+
+        for (Phone p : phones) {
+            if (p.getClass().getSimpleName().equalsIgnoreCase(type)) {
+                System.out.println(p);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Телефони не знайдені.");
+        }
+    }
+
+    // Пошук за максимальною ціною
+    public static void searchByMaxPrice(ArrayList<Phone> phones, double maxPrice) {
+
+        boolean found = false;
+
+        for (Phone p : phones) {
+            if (p.getPrice() <= maxPrice) {
+                System.out.println(p);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Телефони не знайдені.");
+        }
+    }
+
     public static void main(String[] args) {
 
         ArrayList<Phone> phones = FileManager.loadFromJson("input.json");
@@ -135,6 +187,30 @@ public class Main {
 
                 int searchChoice = Integer.parseInt(scanner.nextLine());
 
+                if (searchChoice == 1) {
+
+                    System.out.print("Введіть бренд: ");
+                    String brand = scanner.nextLine();
+
+                    searchByBrand(phones, brand);
+
+                }
+                else if (searchChoice == 2) {
+
+                    System.out.print("Введіть тип телефону: ");
+                    String type = scanner.nextLine();
+
+                    searchByType(phones, type);
+
+                }
+                else if (searchChoice == 3) {
+
+                    System.out.print("Введіть максимальну ціну: ");
+                    double maxPrice = Double.parseDouble(scanner.nextLine());
+
+                    searchByMaxPrice(phones, maxPrice);
+
+                }
             }
 
             else if (choice == 0) {
