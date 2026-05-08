@@ -1,6 +1,8 @@
 package com.example;
 
+import java.util.Properties;
 import java.util.Scanner;
+import java.io.FileInputStream;
 
 /**
  * Головний клас програми з консольним меню
@@ -8,6 +10,41 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
+
+        // Перевірка наявності конфігураційного файлу
+        if (args.length == 0) {
+
+            System.out.println("Вкажіть шлях до config файлу!");
+            System.out.println("Приклад:");
+            System.out.println("java Main app.properties");
+
+            return;
+        }
+
+        // Завантаження параметрів підключення до БД
+        Properties properties = new Properties();
+
+        try {
+
+            FileInputStream fis = new FileInputStream(args[0]);
+
+            properties.load(fis);
+
+        }
+        catch (Exception e) {
+
+            System.out.println("Помилка читання config файлу!");
+            return;
+        }
+
+        // Отримання параметрів БД
+        String url = properties.getProperty("db.url");
+        String user = properties.getProperty("db.user");
+        String password = properties.getProperty("db.password");
+
+        // Створення менеджера БД
+        DatabaseManager dbManager =
+                new DatabaseManager(url, user, password);
 
         // Створення магазину
         Store store = new Store();
@@ -160,6 +197,9 @@ public class Main {
 
                     // Додавання телефону в магазин
                     store.addNewPhone(phone, quantity);
+
+                    // INSERT у базу даних
+                    dbManager.insertPhone(phone, quantity);
 
                     System.out.println("Телефон додано!");
 
