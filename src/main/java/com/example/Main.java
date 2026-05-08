@@ -1,8 +1,6 @@
 package com.example;
 
-import java.util.Properties;
 import java.util.Scanner;
-import java.io.FileInputStream;
 
 /**
  * Головний клас програми з консольним меню
@@ -11,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // Перевірка наявності конфігураційного файлу
+        // Перевірка наявності config файлу
         if (args.length == 0) {
 
             System.out.println("Вкажіть шлях до config файлу!");
@@ -21,30 +19,9 @@ public class Main {
             return;
         }
 
-        // Завантаження параметрів підключення до БД
-        Properties properties = new Properties();
-
-        try {
-
-            FileInputStream fis = new FileInputStream(args[0]);
-
-            properties.load(fis);
-
-        }
-        catch (Exception e) {
-
-            System.out.println("Помилка читання config файлу!");
-            return;
-        }
-
-        // Отримання параметрів БД
-        String url = properties.getProperty("db.url");
-        String user = properties.getProperty("db.user");
-        String password = properties.getProperty("db.password");
-
         // Створення менеджера БД
         DatabaseManager dbManager =
-                new DatabaseManager(url, user, password);
+                new DatabaseManager(args[0]);
 
         // Створення магазину
         Store store = new Store();
@@ -199,15 +176,16 @@ public class Main {
                     store.addNewPhone(phone, quantity);
 
                     // INSERT у базу даних
-                    dbManager.insertPhone(phone, quantity);
+                    dbManager.insertPhone(phone);
 
                     System.out.println("Телефон додано!");
-
                 }
                 catch (IllegalArgumentException e) {
+
                     System.out.println("Помилка: " + e.getMessage());
                 }
                 catch (Exception e) {
+
                     System.out.println("Невірний формат даних!");
                 }
             }
