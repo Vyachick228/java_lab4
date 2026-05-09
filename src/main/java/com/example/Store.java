@@ -1,7 +1,6 @@
 package com.example;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 
@@ -143,19 +142,14 @@ public class Store {
                 new ArrayList<>(phones);
 
         Comparator<Phone> comparator =
-                new Comparator<>() {
-
-                    @Override
-                    public int compare(Phone o1, Phone o2) {
-
-                        return o1.getBrand()
+                (o1, o2) ->
+                        o1.getBrand()
                                 .compareToIgnoreCase(
                                         o2.getBrand()
                                 );
-                    }
-                };
 
         sortedPhones.sort(comparator);
+
         System.out.println("\nСортування за брендом:");
 
         for (Phone phone : sortedPhones) {
@@ -177,19 +171,14 @@ public class Store {
                 new ArrayList<>(phones);
 
         Comparator<Phone> comparator =
-                new Comparator<>() {
-
-                    @Override
-                    public int compare(Phone o1, Phone o2) {
-
-                        return Double.compare(
+                (o1, o2) ->
+                        Double.compare(
                                 o1.getPrice(),
                                 o2.getPrice()
                         );
-                    }
-                };
 
         sortedPhones.sort(comparator);
+
         System.out.println("\nСортування за ціною:");
 
         for (Phone phone : sortedPhones) {
@@ -211,19 +200,14 @@ public class Store {
                 new ArrayList<>(phones);
 
         Comparator<Phone> comparator =
-                new Comparator<>() {
-
-                    @Override
-                    public int compare(Phone o1, Phone o2) {
-
-                        return Integer.compare(
+                (o1, o2) ->
+                        Integer.compare(
                                 o1.getStorage(),
                                 o2.getStorage()
                         );
-                    }
-                };
 
         sortedPhones.sort(comparator);
+
         System.out.println("\nСортування за пам'яттю:");
 
         for (Phone phone : sortedPhones) {
@@ -237,6 +221,7 @@ public class Store {
 
         return phones;
     }
+
     // Геттер кількостей
     public ArrayList<Integer> getQuantities() {
 
