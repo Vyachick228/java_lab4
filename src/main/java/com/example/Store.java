@@ -1,22 +1,23 @@
 package com.example;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
- // Клас Store зберігає телефони та їх кількість
+// Клас Store зберігає телефони та їх кількість
 public class Store {
 
     // Колекція телефонів
-    private ArrayList<Phone> phones;
+    private final ArrayList<Phone> phones;
 
     // Колекція кількостей
-    private ArrayList<Integer> quantities;
+    private final ArrayList<Integer> quantities;
 
     // Конструктор
     public Store() {
 
-        phones = new ArrayList<Phone>();
-        quantities = new ArrayList<Integer>();
+        phones = new ArrayList<>();
+        quantities = new ArrayList<>();
     }
 
     // Додавання телефону в магазин
@@ -59,6 +60,7 @@ public class Store {
         }
 
         if (!found) {
+
             System.out.println("Телефони не знайдені.");
         }
     }
@@ -82,6 +84,7 @@ public class Store {
         }
 
         if (!found) {
+
             System.out.println("Телефони не знайдені.");
         }
     }
@@ -105,6 +108,7 @@ public class Store {
         }
 
         if (!found) {
+
             System.out.println("Телефони не знайдені.");
         }
     }
@@ -125,13 +129,31 @@ public class Store {
         }
     }
 
-    // Геттер для FileManager
-    public ArrayList<Phone> getPhones() {
-        return phones;
+    // Сортування телефонів
+    public void showSortedPhones() {
+
+        if (phones.isEmpty()) {
+
+            System.out.println("Список порожній.");
+            return;
+        }
+
+        ArrayList<Phone> sortedPhones =
+                new ArrayList<>(phones);
+
+        Collections.sort(sortedPhones);
+
+        System.out.println("\nВідсортовані телефони:");
+
+        for (Phone phone : sortedPhones) {
+
+            System.out.println(phone);
+        }
     }
 
-    // Геттер для кількостей
-    public ArrayList<Integer> getQuantities() {
-        return quantities;
+    // Геттер для FileManager
+    public ArrayList<Phone> getPhones() {
+
+        return phones;
     }
 }
