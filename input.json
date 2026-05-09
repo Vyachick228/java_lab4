@@ -1,11 +1,26 @@
 [
   {
-    "buttons": 45,
-    "brand": "Smsa",
-    "model": "s2242",
-    "price": 222.0,
-    "storage": 124,
-    "type": "BUTTON",
-    "classType": "KeypadPhone"
+    "phone": {
+      "os": "1",
+      "brand": "1",
+      "model": "1",
+      "price": 1.0,
+      "storage": 1,
+      "type": "SMARTPHONE",
+      "classType": "SmartPhone"
+    },
+    "quantity": 1
+  },
+  {
+    "phone": {
+      "buttons": 3,
+      "brand": "3",
+      "model": "3",
+      "price": 3.0,
+      "storage": 3,
+      "type": "BUTTON",
+      "classType": "KeypadPhone"
+    },
+    "quantity": 3
   }
 ]
