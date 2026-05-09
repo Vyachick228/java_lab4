@@ -9,6 +9,20 @@ public class Main {
 
     public static void main(String[] args) {
 
+        // Перевірка наявності config файлу
+        if (args.length == 0) {
+
+            System.out.println("Вкажіть шлях до config файлу!");
+            System.out.println("Приклад:");
+            System.out.println("java Main app.properties");
+
+            return;
+        }
+
+        // Створення менеджера БД
+        DatabaseManager dbManager =
+                new DatabaseManager(args[0]);
+
         // Створення магазину
         Store store = new Store();
 
@@ -25,6 +39,7 @@ public class Main {
             System.out.println("1 - Додати телефон");
             System.out.println("2 - Показати всі телефони");
             System.out.println("3 - Пошук телефону");
+            System.out.println("4 - Вивести відсортовані телефони");
             System.out.println("0 - Вийти");
             System.out.print("Оберіть: ");
 
@@ -161,13 +176,17 @@ public class Main {
                     // Додавання телефону в магазин
                     store.addNewPhone(phone, quantity);
 
-                    System.out.println("Телефон додано!");
+                    // INSERT у базу даних
+                    dbManager.insertPhone(phone);
 
+                    System.out.println("Телефон додано!");
                 }
                 catch (IllegalArgumentException e) {
+
                     System.out.println("Помилка: " + e.getMessage());
                 }
                 catch (Exception e) {
+
                     System.out.println("Невірний формат даних!");
                 }
             }
@@ -181,40 +200,53 @@ public class Main {
             // Меню пошуку
             else if (choice == 3) {
 
-                System.out.println("\nПОШУК");
-                System.out.println("1 - Пошук за брендом");
-                System.out.println("2 - Пошук за типом");
-                System.out.println("3 - Пошук за максимальною ціною");
-                System.out.println("0 - Назад");
+                try {
 
-                int searchChoice = Integer.parseInt(scanner.nextLine());
+                    System.out.println("\nПОШУК");
+                    System.out.println("1 - Пошук за брендом");
+                    System.out.println("2 - Пошук за типом");
+                    System.out.println("3 - Пошук за максимальною ціною");
+                    System.out.println("0 - Назад");
 
-                // Пошук за брендом
-                if (searchChoice == 1) {
+                    int searchChoice = Integer.parseInt(scanner.nextLine());
 
-                    System.out.print("Введіть бренд: ");
-                    String brand = scanner.nextLine();
+                    // Пошук за брендом
+                    if (searchChoice == 1) {
 
-                    store.searchByBrand(brand);
+                        System.out.print("Введіть бренд: ");
+                        String brand = scanner.nextLine();
+
+                        store.searchByBrand(brand);
+                    }
+
+                    // Пошук за типом
+                    else if (searchChoice == 2) {
+
+                        System.out.print("Введіть тип телефону: ");
+                        String type = scanner.nextLine();
+
+                        store.searchByType(type);
+                    }
+
+                    // Пошук за ціною
+                    else if (searchChoice == 3) {
+
+                        System.out.print("Введіть максимальну ціну: ");
+                        double maxPrice = Double.parseDouble(scanner.nextLine());
+
+                        store.searchByMaxPrice(maxPrice);
+                    }
                 }
+                catch (Exception e) {
 
-                // Пошук за типом
-                else if (searchChoice == 2) {
-
-                    System.out.print("Введіть тип телефону: ");
-                    String type = scanner.nextLine();
-
-                    store.searchByType(type);
+                    System.out.println("Некоректне введення!");
                 }
+            }
 
-                // Пошук за ціною
-                else if (searchChoice == 3) {
+            // Виведення відсортованих телефонів
+            else if (choice == 4) {
 
-                    System.out.print("Введіть максимальну ціну: ");
-                    double maxPrice = Double.parseDouble(scanner.nextLine());
-
-                    store.searchByMaxPrice(maxPrice);
-                }
+                store.showSortedPhones();
             }
 
             // Завершення роботи
