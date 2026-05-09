@@ -10,80 +10,160 @@ import java.util.ArrayList;
 public class FileManager {
 
     /**
+     * Внутрішній клас для JSON
+     */
+    private static class PhoneData {
+
+        Phone phone;
+        int quantity;
+
+        public PhoneData(Phone phone, int quantity) {
+
+            this.phone = phone;
+            this.quantity = quantity;
+        }
+    }
+
+    /**
      * Зберігає список телефонів у JSON файл
      */
-    public static void saveToJson(ArrayList<Phone> phones, String fileName) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    public static void saveToJson(Store store, String fileName) {
 
-        try (FileWriter writer = new FileWriter(fileName)) {
-            gson.toJson(phones, writer);
+        Gson gson =
+                new GsonBuilder()
+                        .setPrettyPrinting()
+                        .create();
+
+        ArrayList<PhoneData> data =
+                new ArrayList<>();
+
+        ArrayList<Phone> phones =
+                store.getPhones();
+
+        ArrayList<Integer> quantities =
+                store.getQuantities();
+
+        for (int i = 0; i < phones.size(); i++) {
+
+            data.add(
+                    new PhoneData(
+                            phones.get(i),
+                            quantities.get(i)
+                    )
+            );
+        }
+
+        try (FileWriter writer =
+                     new FileWriter(fileName)) {
+
+            gson.toJson(data, writer);
+
         } catch (IOException e) {
-            System.out.println("Помилка запису: " + e.getMessage());
+
+            System.out.println(
+                    "Помилка запису: "
+                            + e.getMessage()
+            );
         }
     }
 
     /**
      * Завантажує список телефонів з JSON файлу
      */
-    public static ArrayList<Phone> loadFromJson(String fileName) {
-        ArrayList<Phone> phones = new ArrayList<>();
+    public static void loadFromJson(
+            Store store,
+            String fileName
+    ) {
 
-        try (Reader reader = new FileReader(fileName)) {
+        try (Reader reader =
+                     new FileReader(fileName)) {
 
-            JsonArray array = JsonParser.parseReader(reader).getAsJsonArray();
+            JsonArray array =
+                    JsonParser.parseReader(reader)
+                            .getAsJsonArray();
 
             for (JsonElement element : array) {
-                JsonObject obj = element.getAsJsonObject();
 
-                String type = obj.get("classType").getAsString();
+                JsonObject wrapper =
+                        element.getAsJsonObject();
+
+                JsonObject obj =
+                        wrapper.getAsJsonObject("phone");
+
+                int quantity =
+                        wrapper.get("quantity")
+                                .getAsInt();
+
+                String type =
+                        obj.get("classType")
+                                .getAsString();
 
                 Phone phone = null;
 
                 switch (type) {
+
                     case "SmartPhone":
-                        phone = new Gson().fromJson(obj, SmartPhone.class);
+
+                        phone = new Gson().fromJson(
+                                obj,
+                                SmartPhone.class
+                        );
                         break;
 
                     case "KeypadPhone":
-                        phone = new Gson().fromJson(obj, KeypadPhone.class);
+
+                        phone = new Gson().fromJson(
+                                obj,
+                                KeypadPhone.class
+                        );
                         break;
 
                     case "GamingPhone":
-                        phone = new Gson().fromJson(obj, GamingPhone.class);
+
+                        phone = new Gson().fromJson(
+                                obj,
+                                GamingPhone.class
+                        );
                         break;
 
                     case "CameraPhone":
-                        phone = new Gson().fromJson(obj, CameraPhone.class);
+
+                        phone = new Gson().fromJson(
+                                obj,
+                                CameraPhone.class
+                        );
                         break;
 
                     case "BusinessPhone":
-                        phone = new Gson().fromJson(obj, BusinessPhone.class);
+
+                        phone = new Gson().fromJson(
+                                obj,
+                                BusinessPhone.class
+                        );
                         break;
                 }
 
                 if (phone != null) {
-                    phones.add(phone);
+
+                    store.addNewPhone(
+                            phone,
+                            quantity
+                    );
                 }
             }
 
         } catch (FileNotFoundException e) {
-            System.out.println("Файл не знайдено, буде створено новий.");
+
+            System.out.println(
+                    "Файл не знайдено, буде створено новий."
+            );
+
         } catch (Exception e) {
-            System.out.println("Помилка читання JSON: " + e.getMessage());
+
+            System.out.println(
+                    "Помилка читання JSON: "
+                            + e.getMessage()
+            );
         }
-
-        return phones;
-    }
-    public static void loadFromJson(Store store, String fileName) {
-
-        ArrayList<Phone> phones = loadFromJson(fileName);
-
-        for (Phone phone : phones) {
-            store.addNewPhone(phone, 1);
-        }
-    }
-    public static void saveToJson(Store store, String fileName) {
-
-        saveToJson(store.getPhones(), fileName);
     }
 }
