@@ -2,6 +2,7 @@ package com.example;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 
 // Клас Store зберігає телефони та їх кількість
@@ -129,8 +130,8 @@ public class Store {
         }
     }
 
-    // Сортування телефонів
-    public void showSortedPhones() {
+    // Сортування за брендом
+    public void sortByBrand() {
 
         if (phones.isEmpty()) {
 
@@ -141,9 +142,89 @@ public class Store {
         ArrayList<Phone> sortedPhones =
                 new ArrayList<>(phones);
 
-        Collections.sort(sortedPhones);
+        Comparator<Phone> comparator =
+                new Comparator<>() {
 
-        System.out.println("\nВідсортовані телефони:");
+                    @Override
+                    public int compare(Phone o1, Phone o2) {
+
+                        return o1.getBrand()
+                                .compareToIgnoreCase(
+                                        o2.getBrand()
+                                );
+                    }
+                };
+
+        sortedPhones.sort(comparator);
+        System.out.println("\nСортування за брендом:");
+
+        for (Phone phone : sortedPhones) {
+
+            System.out.println(phone);
+        }
+    }
+
+    // Сортування за ціною
+    public void sortByPrice() {
+
+        if (phones.isEmpty()) {
+
+            System.out.println("Список порожній.");
+            return;
+        }
+
+        ArrayList<Phone> sortedPhones =
+                new ArrayList<>(phones);
+
+        Comparator<Phone> comparator =
+                new Comparator<>() {
+
+                    @Override
+                    public int compare(Phone o1, Phone o2) {
+
+                        return Double.compare(
+                                o1.getPrice(),
+                                o2.getPrice()
+                        );
+                    }
+                };
+
+        sortedPhones.sort(comparator);
+        System.out.println("\nСортування за ціною:");
+
+        for (Phone phone : sortedPhones) {
+
+            System.out.println(phone);
+        }
+    }
+
+    // Сортування за пам'яттю
+    public void sortByStorage() {
+
+        if (phones.isEmpty()) {
+
+            System.out.println("Список порожній.");
+            return;
+        }
+
+        ArrayList<Phone> sortedPhones =
+                new ArrayList<>(phones);
+
+        Comparator<Phone> comparator =
+                new Comparator<>() {
+
+                    @Override
+                    public int compare(Phone o1, Phone o2) {
+
+                        return Integer.compare(
+                                o1.getStorage(),
+                                o2.getStorage()
+                        );
+                    }
+                };
+
+        sortedPhones.sort(comparator);
+        System.out.println("\nСортування за пам'яттю:");
 
         for (Phone phone : sortedPhones) {
 
@@ -155,5 +236,10 @@ public class Store {
     public ArrayList<Phone> getPhones() {
 
         return phones;
+    }
+    // Геттер кількостей
+    public ArrayList<Integer> getQuantities() {
+
+        return quantities;
     }
 }
