@@ -94,7 +94,7 @@ public abstract class Phone
 
         if (brand == null || brand.isEmpty()) {
 
-            throw new IllegalArgumentException(
+            throw new PhoneException(
                     "Brand cannot be empty"
             );
         }
@@ -106,7 +106,7 @@ public abstract class Phone
 
         if (model == null || model.isEmpty()) {
 
-            throw new IllegalArgumentException(
+            throw new PhoneException(
                     "Model cannot be empty"
             );
         }
@@ -118,7 +118,7 @@ public abstract class Phone
 
         if (price <= 0) {
 
-            throw new IllegalArgumentException(
+            throw new PhoneException(
                     "Price must be > 0"
             );
         }
@@ -130,7 +130,7 @@ public abstract class Phone
 
         if (storage <= 0) {
 
-            throw new IllegalArgumentException(
+            throw new PhoneException(
                     "Storage must be > 0"
             );
         }
@@ -142,7 +142,7 @@ public abstract class Phone
 
         if (type == null) {
 
-            throw new IllegalArgumentException(
+            throw new PhoneException(
                     "Type cannot be null"
             );
         }
