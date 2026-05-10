@@ -209,6 +209,7 @@ public class Main {
                     System.out.println("1 - Пошук за брендом");
                     System.out.println("2 - Пошук за типом");
                     System.out.println("3 - Пошук за максимальною ціною");
+                    System.out.println("4 - Пошук за UUID");
                     System.out.println("0 - Назад");
 
                     int searchChoice =
@@ -248,6 +249,18 @@ public class Main {
                                 );
 
                         store.searchByMaxPrice(maxPrice);
+                    }
+                    // Пошук за UUID
+                    else if (searchChoice == 4) {
+
+                        System.out.print(
+                                "Введіть UUID: "
+                        );
+
+                        String uuid =
+                                scanner.nextLine();
+
+                        store.searchByUuid(uuid);
                     }
                 }
                 catch (Exception e) {

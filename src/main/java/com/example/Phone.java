@@ -1,9 +1,12 @@
 package com.example;
 
+import java.util.UUID;
 
-    // Абстрактний клас Phone описує мобільний телефон.
+// Абстрактний клас Phone описує мобільний телефон.
+public abstract class Phone
+        implements Comparable<Phone>, Identifiable {
 
-public abstract class Phone implements Comparable<Phone> {
+    protected UUID uuid;
 
     protected String brand;
     protected String model;
@@ -12,12 +15,21 @@ public abstract class Phone implements Comparable<Phone> {
     protected PhoneType type;
     protected String classType;
 
-    public Phone() {}
+    public Phone() {
 
+        uuid = UUID.randomUUID();
+    }
 
     // Конструктор з параметрами.
+    public Phone(
+            String brand,
+            String model,
+            double price,
+            int storage,
+            PhoneType type
+    ) {
 
-    public Phone(String brand, String model, double price, int storage, PhoneType type) {
+        uuid = UUID.randomUUID();
 
         setBrand(brand);
         setModel(model);
@@ -26,10 +38,10 @@ public abstract class Phone implements Comparable<Phone> {
         setType(type);
     }
 
-    //Копіюючий конструктор
-
+    // Копіюючий конструктор
     public Phone(Phone other) {
 
+        this.uuid = other.uuid;
         this.brand = other.brand;
         this.model = other.model;
         this.price = other.price;
@@ -38,119 +50,127 @@ public abstract class Phone implements Comparable<Phone> {
         this.classType = other.classType;
     }
 
-    // Реалізація Comparable
-    // Сортування за брендом
+    @Override
+    public UUID getUuid() {
 
+        return uuid;
+    }
+
+    // Реалізація Comparable
     @Override
     public int compareTo(Phone other) {
 
-        return this.brand.compareToIgnoreCase(other.brand);
+        return this.brand.compareToIgnoreCase(
+                other.brand
+        );
     }
 
-    //Повертає бренд телефону
-
     public String getBrand() {
+
         return brand;
     }
 
-    //  Повертає модель телефону
-
     public String getModel() {
+
         return model;
     }
 
-    // Повертає ціну телефону
-
     public double getPrice() {
+
         return price;
     }
 
-    // Повертає обсяг пам'яті телефону
-
     public int getStorage() {
+
         return storage;
     }
 
-    // Повертає тип телефону
-
     public PhoneType getType() {
+
         return type;
     }
-
-    // Встановлює бренд телефону
 
     public void setBrand(String brand) {
 
         if (brand == null || brand.isEmpty()) {
-            throw new IllegalArgumentException("Brand cannot be empty");
+
+            throw new IllegalArgumentException(
+                    "Brand cannot be empty"
+            );
         }
 
         this.brand = brand;
     }
 
-    // Встановлює модель телефону
-
     public void setModel(String model) {
 
         if (model == null || model.isEmpty()) {
-            throw new IllegalArgumentException("Model cannot be empty");
+
+            throw new IllegalArgumentException(
+                    "Model cannot be empty"
+            );
         }
 
         this.model = model;
     }
 
-    // Встановлює ціну телефону
-
     public void setPrice(double price) {
 
         if (price <= 0) {
-            throw new IllegalArgumentException("Price must be > 0");
+
+            throw new IllegalArgumentException(
+                    "Price must be > 0"
+            );
         }
 
         this.price = price;
     }
 
-    // Встановлює обсяг пам'яті телефону
-
     public void setStorage(int storage) {
 
         if (storage <= 0) {
-            throw new IllegalArgumentException("Storage must be > 0");
+
+            throw new IllegalArgumentException(
+                    "Storage must be > 0"
+            );
         }
 
         this.storage = storage;
     }
 
-    // Встановлює тип телефону
-
     public void setType(PhoneType type) {
 
         if (type == null) {
-            throw new IllegalArgumentException("Type cannot be null");
+
+            throw new IllegalArgumentException(
+                    "Type cannot be null"
+            );
         }
 
         this.type = type;
     }
 
-
-    // Повертає рядкове представлення об'єкта
-
     @Override
     public String toString() {
 
-        return brand + " " + model +
+        return "UUID: " + uuid +
+                "\n" + brand + " " + model +
                 " | " + price + "$ | " +
                 storage + "GB | " + type;
     }
 
-    // Порівнює два об'єкти Phone
-
     @Override
     public boolean equals(Object obj) {
 
-        if (this == obj) return true;
+        if (this == obj) {
 
-        if (!(obj instanceof Phone other)) return false;
+            return true;
+        }
+
+        if (!(obj instanceof Phone other)) {
+
+            return false;
+        }
 
         return brand.equals(other.brand) &&
                 model.equals(other.model) &&

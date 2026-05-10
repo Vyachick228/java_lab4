@@ -2,7 +2,7 @@ package com.example;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-
+import java.util.UUID;
 
 // Клас Store зберігає телефони та їх кількість
 public class Store {
@@ -226,5 +226,33 @@ public class Store {
     public ArrayList<Integer> getQuantities() {
 
         return quantities;
+    }
+    // Пошук за UUID
+    public void searchByUuid(String uuidText) {
+
+        try {
+
+            UUID uuid =
+                    UUID.fromString(uuidText);
+
+            for (Phone phone : phones) {
+
+                if (phone.getUuid().equals(uuid)) {
+
+                    System.out.println(phone);
+                    return;
+                }
+            }
+
+            System.out.println(
+                    "Телефон не знайдено."
+            );
+        }
+        catch (IllegalArgumentException e) {
+
+            System.out.println(
+                    "Некоректний UUID!"
+            );
+        }
     }
 }
