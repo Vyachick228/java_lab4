@@ -255,4 +255,41 @@ public class Store {
             );
         }
     }
+    // Оновлення телефону
+    public boolean update(
+            Phone existingPhone,
+            Phone newPhone
+    ) {
+
+        int index =
+                phones.indexOf(existingPhone);
+
+        if (index == -1) {
+
+            return false;
+        }
+
+        phones.set(index, newPhone);
+
+        return true;
+    }
+
+    // Видалення телефону
+    public boolean delete(
+            Phone existingPhone
+    ) {
+
+        int index =
+                phones.indexOf(existingPhone);
+
+        if (index == -1) {
+
+            return false;
+        }
+
+        phones.remove(index);
+        quantities.remove(index);
+
+        return true;
+    }
 }
