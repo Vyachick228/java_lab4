@@ -47,4 +47,40 @@ public class PhoneTest {
 
         assertEquals(p1, p2);
     }
+
+    @Test
+    public void testPhoneException() {
+
+        assertThrows(
+                PhoneException.class,
+                () -> new SmartPhone(
+                        "",
+                        "S24",
+                        50000,
+                        256,
+                        PhoneType.SMARTPHONE,
+                        "Android"
+                )
+        );
+    }
+
+    @Test
+    public void testStoreException() {
+
+        Store store = new Store();
+
+        Phone phone = new SmartPhone(
+                "Samsung",
+                "S24",
+                50000,
+                256,
+                PhoneType.SMARTPHONE,
+                "Android"
+        );
+
+        assertThrows(
+                StoreException.class,
+                () -> store.delete(phone)
+        );
+    }
 }
