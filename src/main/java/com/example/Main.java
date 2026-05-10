@@ -7,6 +7,45 @@ import java.util.Scanner;
  */
 public class Main {
 
+    // Метод вибору телефону
+    private static Phone choosePhone(
+            Store store,
+            Scanner scanner
+    ) {
+
+        if (store.getPhones().isEmpty()) {
+
+            System.out.println("Список порожній.");
+            return null;
+        }
+
+        System.out.println("\nСписок телефонів:");
+
+        for (int i = 0; i < store.getPhones().size(); i++) {
+
+            System.out.println(
+                    (i + 1) + " - " +
+                            store.getPhones().get(i)
+            );
+        }
+
+        System.out.print(
+                "Оберіть номер телефону: "
+        );
+
+        int index =
+                Integer.parseInt(scanner.nextLine()) - 1;
+
+        if (index < 0 ||
+                index >= store.getPhones().size()) {
+
+            System.out.println("Невірний номер!");
+            return null;
+        }
+
+        return store.getPhones().get(index);
+    }
+
     public static void main(String[] args) {
 
         // Створення магазину
@@ -24,8 +63,10 @@ public class Main {
             System.out.println("\n МЕНЮ ");
             System.out.println("1 - Додати телефон");
             System.out.println("2 - Показати всі телефони");
-            System.out.println("3 - Пошук телефону");
-            System.out.println("4 - Вивести відсортовані телефони");
+            System.out.println("3 - Модифікувати телефон");
+            System.out.println("4 - Видалити телефон");
+            System.out.println("5 - Пошук телефону");
+            System.out.println("6 - Вивести відсортовані телефони");
             System.out.println("0 - Вийти");
             System.out.print("Оберіть: ");
 
@@ -200,8 +241,116 @@ public class Main {
                 store.showAllPhones();
             }
 
-            // Меню пошуку
+            // Модифікація телефону
             else if (choice == 3) {
+
+                try {
+
+                    Phone oldPhone =
+                            choosePhone(store, scanner);
+
+                    if (oldPhone == null) {
+
+                        continue;
+                    }
+
+                    System.out.print("Новий бренд: ");
+                    String brand = scanner.nextLine();
+
+                    System.out.print("Нова модель: ");
+                    String model = scanner.nextLine();
+
+                    System.out.print("Нова ціна: ");
+                    double price =
+                            Double.parseDouble(scanner.nextLine());
+
+                    System.out.print("Нова пам'ять: ");
+                    int storage =
+                            Integer.parseInt(scanner.nextLine());
+
+                    Phone newPhone =
+                            new SmartPhone(
+                                    brand,
+                                    model,
+                                    price,
+                                    storage,
+                                    PhoneType.SMARTPHONE,
+                                    "Android"
+                            );
+
+                    boolean updated =
+                            store.update(oldPhone, newPhone);
+
+                    if (updated) {
+
+                        System.out.println(
+                                "Телефон змінено!"
+                        );
+                    }
+                    else {
+
+                        System.out.println(
+                                "Телефон не знайдено!"
+                        );
+                    }
+                }
+                catch (Exception e) {
+
+                    System.out.println(
+                            "Некоректне введення!"
+                    );
+                }
+            }
+
+            // Видалення телефону
+            else if (choice == 4) {
+
+                try {
+
+                    Phone phoneToDelete =
+                            choosePhone(store, scanner);
+
+                    if (phoneToDelete == null) {
+
+                        continue;
+                    }
+
+                    System.out.print(
+                            "Підтвердити видалення? (yes/no): "
+                    );
+
+                    String confirm =
+                            scanner.nextLine();
+
+                    if (confirm.equalsIgnoreCase("yes")) {
+
+                        boolean deleted =
+                                store.delete(phoneToDelete);
+
+                        if (deleted) {
+
+                            System.out.println(
+                                    "Телефон видалено!"
+                            );
+                        }
+                        else {
+
+                            System.out.println(
+                                    "Телефон не знайдено!"
+                            );
+                        }
+                    }
+                }
+                catch (Exception e) {
+
+                    System.out.println(
+                            "Некоректне введення!"
+                    );
+                }
+            }
+
+            // Меню пошуку
+            else if (choice == 5) {
 
                 try {
 
@@ -250,6 +399,7 @@ public class Main {
 
                         store.searchByMaxPrice(maxPrice);
                     }
+
                     // Пошук за UUID
                     else if (searchChoice == 4) {
 
@@ -272,7 +422,7 @@ public class Main {
             }
 
             // Сортування телефонів
-            else if (choice == 4) {
+            else if (choice == 6) {
 
                 try {
 
