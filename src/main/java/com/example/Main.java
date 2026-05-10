@@ -221,7 +221,7 @@ public class Main {
 
                     System.out.println("Телефон додано!");
                 }
-                catch (IllegalArgumentException e) {
+                catch (PhoneException e) {
 
                     System.out.println(
                             "Помилка: " + e.getMessage()
@@ -278,21 +278,23 @@ public class Main {
                                     "Android"
                             );
 
-                    boolean updated =
-                            store.update(oldPhone, newPhone);
+                    store.update(oldPhone, newPhone);
 
-                    if (updated) {
+                    System.out.println(
+                            "Телефон змінено!"
+                    );
+                }
+                catch (StoreException e) {
 
-                        System.out.println(
-                                "Телефон змінено!"
-                        );
-                    }
-                    else {
+                    System.out.println(
+                            e.getMessage()
+                    );
+                }
+                catch (PhoneException e) {
 
-                        System.out.println(
-                                "Телефон не знайдено!"
-                        );
-                    }
+                    System.out.println(
+                            e.getMessage()
+                    );
                 }
                 catch (Exception e) {
 
@@ -324,22 +326,18 @@ public class Main {
 
                     if (confirm.equalsIgnoreCase("yes")) {
 
-                        boolean deleted =
-                                store.delete(phoneToDelete);
+                        store.delete(phoneToDelete);
 
-                        if (deleted) {
-
-                            System.out.println(
-                                    "Телефон видалено!"
-                            );
-                        }
-                        else {
-
-                            System.out.println(
-                                    "Телефон не знайдено!"
-                            );
-                        }
+                        System.out.println(
+                                "Телефон видалено!"
+                        );
                     }
+                }
+                catch (StoreException e) {
+
+                    System.out.println(
+                            e.getMessage()
+                    );
                 }
                 catch (Exception e) {
 

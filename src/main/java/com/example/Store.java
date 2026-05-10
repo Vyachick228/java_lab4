@@ -227,6 +227,7 @@ public class Store {
 
         return quantities;
     }
+
     // Пошук за UUID
     public void searchByUuid(String uuidText) {
 
@@ -244,7 +245,7 @@ public class Store {
                 }
             }
 
-            System.out.println(
+            throw new StoreException(
                     "Телефон не знайдено."
             );
         }
@@ -254,7 +255,14 @@ public class Store {
                     "Некоректний UUID!"
             );
         }
+        catch (StoreException e) {
+
+            System.out.println(
+                    e.getMessage()
+            );
+        }
     }
+
     // Оновлення телефону
     public boolean update(
             Phone existingPhone,
@@ -266,7 +274,9 @@ public class Store {
 
         if (index == -1) {
 
-            return false;
+            throw new StoreException(
+                    "Телефон не знайдено."
+            );
         }
 
         phones.set(index, newPhone);
@@ -284,7 +294,9 @@ public class Store {
 
         if (index == -1) {
 
-            return false;
+            throw new StoreException(
+                    "Телефон не знайдено."
+            );
         }
 
         phones.remove(index);
